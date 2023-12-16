@@ -1,0 +1,65 @@
+{% extends "base.html" %} {% block title %}Contact page{% endblock title %}
+{%block about %}{% endblock about %} 
+{% block alert %} 
+  {% if messages %} 
+    {% for message in messages %}
+    <div class="alert alert-{{ message.tags }} alert-dismissible my-2 mx-10" id="alertMessage">
+      <a href="#" class="close" data-dismiss="alert" aria-label="close">&times;</a>
+      <strong>{{ message }}</strong>
+    </div>
+    {% endfor %} 
+  {% endif %}
+
+  <script>
+    // Select the alert message
+    var alertMessage = document.getElementById("alertMessage");
+
+    // Function to close the alert after a specified duration (in milliseconds)
+    function closeAlert() {
+      setTimeout(function () {
+        alertMessage.style.display = "none"; // Hide the alert
+      }, 3000); // Adjust the duration (5 seconds in this example)
+    }
+
+    // Call the function to close the alert after page load
+    window.onload = closeAlert;
+  </script>
+
+{% endblock alert %} {% block content %}
+<!-- Container (Contact Section) -->
+<div id="contact" class="container-fluid bg-grey">
+  <h2 class="text-center">CONTACT</h2>
+  <div class="row">
+    <div class="col-sm-5">
+      <p>Contact us and we'll get back to you within 24 hours.</p>
+      <p><span class="glyphicon glyphicon-map-marker"></span> Chicago, US</p>
+      <p><span class="glyphicon glyphicon-phone"></span> +00 1515151515</p>
+      <p>
+        <span class="glyphicon glyphicon-envelope"></span> myemail@something.com
+      </p>
+    </div>
+    <form method="post" action="/contact">
+      {% csrf_token %}
+      <div class="col-sm-7 slideanim">
+        <div class="row">
+          <div class="col-sm-6 form-group">
+            <input class="form-control" id="name" name="name" placeholder="Name" type="text" required />
+          </div>
+          <div class="col-sm-6 form-group">
+            <input class="form-control" id="email" name="email" placeholder="Email" type="email" required />
+          </div>
+        </div>
+        <textarea class="form-control" id="comments" name="comments" placeholder="Comment" rows="5"
+          required></textarea><br />
+        <div class="row">
+          <div class="col-sm-12 form-group">
+            <button class="btn btn-default pull-right" type="submit">
+              Send
+            </button>
+          </div>
+        </div>
+      </div>
+    </form>
+  </div>
+</div>
+{% endblock content %}
